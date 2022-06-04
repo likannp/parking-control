@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  namespace :parking do
+    post "/", to: "parking#create"
+    put "/:id/out", to: "parking#out"
+    put "/:plate/pay", to: "parking#pay"
+    get "/:plate", to: "parking#show"
+  end
 end
