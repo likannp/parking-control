@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  namespace :parking do
-    post "/", to: "parking#create"
-    put "/:id/out", to: "parking#out"
-    put "/:plate/pay", to: "parking#pay"
-    get "/:plate", to: "parking#show"
+  scope :parking do
+    post "/", to: "parking_histories#create"
+    put "/:plate/out", to: "parking_histories#out"
+    put "/:plate/pay", to: "parking_histories#pay"
+    get "/:plate", to: "parking_histories#show"
   end
 end
