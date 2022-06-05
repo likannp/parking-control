@@ -2,19 +2,14 @@ class ParkingHistory < ApplicationRecord
   belongs_to :car
 
   def time
-    time_now = Time.now
-    if out_at.nil?
-      time_dif_seconds = time_now - entry_at
-      time_calculation(time_dif_seconds)
-    else
-      time_dif_seconds = out_at - entry_at
-      time_calculation(time_dif_seconds)
-    end
+    time_calculation((out_at || Time.now) - entry_at)
   end
 
   def left
     !out_at.nil?
   end
+
+  private
 
   def time_calculation time_dif_in_seconds
     time_dif_in_minutes = time_dif_in_seconds / 60
