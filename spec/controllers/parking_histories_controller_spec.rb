@@ -60,5 +60,68 @@ RSpec.describe ParkingHistoriesController, type: :controller do
     end
 
   end
+
+  describe "PUT #out" do
+    let(:parking_history) {create(:parking_history, paid: true)}
+    let(:action) {put :out, params: {plate: parking_history.car.plate}}
+  
+    context "success" do
+      it "went from nil to a value" do
+        action
+        expect(parking_history.reload.out_at).not_to be_nil
+      end
+      it "response have status 204" do
+        action
+        expect(response.status).to be 204
+      end 
+    end
+    context "fail" do
+      let(:parking_history) {create(:parking_history, paid: false)}
+
+      context "Attempt to leave without paying" do
+        it "response have status 422" do
+          action
+          expect(response.status).to be 422
+        end
+        it "response have body payment error" do
+          action
+          expect(JSON.parse(response.body)).to eq({"errors" => "Parking must be paid."})
+        end
+      end
+
+      context "Registration not performed" do
+        let(:action) {put :out, params: {plate: "AAA-7653"}}
+        it "response have status 404" do
+          action
+          expect(response.status).to be 404
+        end
+        it "response have body" do
+          action
+          expect(JSON.parse(response.body)).to eq({"errors" => "Parking record not found."})
+        end
+      end
+    end
+    
+  end
+
+  describe "PUT #pay" do
+    context "success" do
+      
+    end
+    context "fail" do
+      
+    end
+    
+  end
+
+  describe "GET #show" do
+    context "success" do
+      
+    end
+    context "fail" do
+      
+    end
+    
+  end
   
 end
