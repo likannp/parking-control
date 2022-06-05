@@ -14,9 +14,6 @@ class ParkingHistoriesController < ApplicationController
   end
 
   def out
-    #TODO: TEST
-    #erro em caso de carro não cadastrado
-    #erro em caso de pagamento
     # A busca leva em consideração o ultimo registro realizado sem saída.
     parking_history = ParkingHistory.joins(:car).where(car: {plate: params[:plate].downcase}, out_at: nil ).last
 
