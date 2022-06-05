@@ -6,7 +6,7 @@ shared_context "successful request" do
   end
   it "response have status 200" do
     action
-    expect(response.status).to be 200  
+    expect(response.status).to be 201  
   end
   it "response have body" do
     action
