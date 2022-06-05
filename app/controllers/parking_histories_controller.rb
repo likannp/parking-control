@@ -33,15 +33,11 @@ class ParkingHistoriesController < ApplicationController
 
     parking_history.update(paid: true)
     render status: 204
-
-    #erro em caso de carro não cadastrado
-    #sucesso em caso de carro já pago
   end
 
   def show
     parking_history = ParkingHistory.joins(:car).where(car: {plate: params[:plate].downcase})
     render json: parking_history.map { |value| value.as_json(only: [:id,:paid], methods: [:time,:left]) }
-
   end
 
 end
