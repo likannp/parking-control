@@ -9,11 +9,13 @@ class ParkingHistoriesController < ApplicationController
     end
 
     parking_history = ParkingHistory.create(car: car, entry_at: Time.now)
-    render json: {reservation: parking_history.id}
+    render json: {reservation: parking_history.id}, status: 201
+    #TODO: teste status 201
  
   end
 
   def out
+    #TODO: TEST
     #erro em caso de carro não cadastrado
     #erro em caso de pagamento
     # A busca leva em consideração o ultimo registro realizado sem saída.
@@ -29,14 +31,21 @@ class ParkingHistoriesController < ApplicationController
   end
 
   def pay
+    parking_history = ParkingHistory.joins(:car).where(car: {plate: params[:plate].downcase}, paid: false ).last
+
+    return render json: {errors: "Parking record not found."}, status: 404 if parking_history.nil?
+
+    parking_history.update(paid: true)
+    render status: 204
+
     #erro em caso de carro não cadastrado
-    #sucesso em caso de carro já pago, porém adicionar teste no cenario onde ele não pode dá erro.Tem que retorna o mesmo do contexto de sucesso.
-    binding.pry
+    #sucesso em caso de carro já pago
   end
 
   def show
-    #erro em caso de carro não cadastrado
-    binding.pry
+    parking_history = ParkingHistory.joins(:car).where(car: {plate: params[:plate].downcase})
+    render json: parking_history.map { |value| value.as_json(only: [:id,:paid], methods: [:time,:left]) }
+
   end
 
 end
