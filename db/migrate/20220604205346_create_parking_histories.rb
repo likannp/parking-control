@@ -4,7 +4,7 @@ class CreateParkingHistories < ActiveRecord::Migration[7.0]
       t.references :car, null: false, foreign_key: true
       t.datetime :entry_at
       t.datetime :out_at
-      t.boolean :paid
+      t.boolean :paid, default: false
 
       t.timestamps
     end
