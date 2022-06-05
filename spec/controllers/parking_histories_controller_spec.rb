@@ -105,23 +105,70 @@ RSpec.describe ParkingHistoriesController, type: :controller do
   end
 
   describe "PUT #pay" do
+    let(:parking_history) {create(:parking_history)}
+    let(:action) {put :pay, params: {plate: parking_history.car.plate}}
+
     context "success" do
+      it "went from nil to a value" do
+        action
+        expect(parking_history.reload.paid).not_to be_nil
+      end
+      it "response have status 204" do
+        action
+        expect(response.status).to be 204
+      end
       
+      context "Payment not made" do
+        it "response have status 204" do
+          action
+          expect(response.status).to be 204
+        end
+      end
+
     end
+
     context "fail" do
+      context "Registration not performed" do
+        let(:action) {put :pay, params: {plate: "AAA-7653"}}
+        it "response have status 404" do
+          action
+          expect(response.status).to be 404
+        end
+        it "response have body" do
+          action
+          expect(JSON.parse(response.body)).to eq({"errors" => "Parking record not found."})
+        end
+      end
       
     end
     
   end
 
   describe "GET #show" do
+    let(:parking_history) {create(:parking_history)}
+    let(:parking_history_paid_true) {create(:parking_history, car: parking_history.car, paid: true, out_at: 30.minutes.ago)}
+    let(:action) {get :show, params: {plate: parking_history.car.plate}}
+
     context "success" do
+      before {parking_history_paid_true}
+      it "response have body" do
+        action
+        expect(JSON.parse(response.body)).to match([{
+          "id" => parking_history.id,
+          "paid" => parking_history.paid,
+          "time" => "1.0 hours",
+          "left" => false
+        },
+        {
+          "id" => parking_history_paid_true.id,
+          "paid" => parking_history_paid_true.paid,
+          "time" => "29.99 minutes",
+          "left" => true
+        }
+        ])
+      end
       
     end
-    context "fail" do
-      
-    end
-    
   end
   
 end
