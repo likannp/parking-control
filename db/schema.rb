@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_04_205346) do
     t.bigint "car_id", null: false
     t.datetime "entry_at"
     t.datetime "out_at"
-    t.boolean "paid"
+    t.boolean "paid", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_parking_histories_on_car_id"
