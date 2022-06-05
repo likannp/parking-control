@@ -5,7 +5,7 @@ class Car < ApplicationRecord
   private
   
   def invalid_plate_format
-    validate = plate.match(/[a-zA-Z]{3}-[0-9]{4}/)
+    validate = plate.match(/^[a-zA-Z]{3}-[0-9]{4}$/)
     errors.add(:plate, :invalid, message: "Invalid Car Plate") if validate.nil?
   end
 end
