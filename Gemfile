@@ -23,6 +23,7 @@ gem "bootsnap", require: false
 group :development, :test do
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
   gem 'factory_bot_rails'
+  gem "timecop"
   gem 'rails-controller-testing'
   gem "pry"
 end
