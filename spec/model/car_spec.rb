@@ -10,4 +10,12 @@ RSpec.describe Car, type: :model do
     end
 
   end
+
+  describe 'plate downcase on save' do
+    let(:car) {Car.new(plate: "ATR-9876")}
+    before {car.save}
+    it "plate case should be always downcase" do
+      expect(car.plate).to eq "atr-9876"
+    end
+  end
 end
