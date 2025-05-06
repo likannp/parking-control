@@ -73,7 +73,7 @@ GEM
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     diff-lcs (1.5.0)
-    digest (3.1.0)
+    digest (3.2.0)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -98,7 +98,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.15.0)
     msgpack (1.5.2)
-    net-imap (0.2.3)
+    net-imap (0.2.5)
       digest
       net-protocol
       strscan
@@ -106,7 +106,7 @@ GEM
       digest
       net-protocol
       timeout
-    net-protocol (0.1.3)
+    net-protocol (0.2.2)
       timeout
     net-smtp (0.3.1)
       digest
@@ -173,10 +173,10 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
-    strscan (3.0.3)
+    strscan (3.1.5)
     thor (1.2.1)
     timecop (0.9.5)
-    timeout (0.3.0)
+    timeout (0.4.3)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
